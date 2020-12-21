@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Util {
-    private String url = "jdbc:mysql://localhost:3306/mydb";
+    private String url = "jdbc:mysql://localhost:3306/mydb?useUnicode=true&serverTimezone=UTC";
     private String user = "root";
     private String password = "1224";
     private Connection connection;
@@ -15,7 +15,7 @@ public class Util {
 
     public Connection getConnection() {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+            Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(url, user, password);
             if (!connection.isClosed()) {
                 System.out.println("We get connection");
