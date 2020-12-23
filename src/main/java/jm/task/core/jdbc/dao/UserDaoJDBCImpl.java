@@ -15,7 +15,6 @@ public class UserDaoJDBCImpl implements UserDao {
     private Statement statement;
     final private String createTableSQL = "CREATE TABLE IF NOT EXISTS USER (id INTEGER not NULL AUTO_INCREMENT,  name VARCHAR(255), lastName VARCHAR(255), age INTEGER, PRIMARY KEY (id))";
     final private String dropTableSQL = "DROP TABLE USER";
-    final private String truncUser = "TRUNCATE TABLE USER";
 
     public UserDaoJDBCImpl() {
         try {
@@ -79,8 +78,7 @@ public class UserDaoJDBCImpl implements UserDao {
     public List<User> getAllUsers() {
         List<User> resultUserList = new LinkedList<>();
         try {
-            PreparedStatement getAllUsers = connection.prepareStatement("SELECT * FROM ?");
-            getAllUsers.setString(1, "USER");
+            PreparedStatement getAllUsers = connection.prepareStatement("SELECT * FROM USER");
             ResultSet resultSet = getAllUsers.executeQuery();
             while (resultSet.next()) {
                 resultUserList.add(new User(resultSet.getString("name"), resultSet.getString("lastName"), (byte) resultSet.getInt("age")));
@@ -95,7 +93,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void cleanUsersTable() {
         try {
-            statement.executeUpdate(truncUser);
+            PreparedStatement truncateUserTable = connection.prepareStatement("TRUNCATE TABLE USER");
         } catch (SQLException e) {
             e.printStackTrace();
         }
