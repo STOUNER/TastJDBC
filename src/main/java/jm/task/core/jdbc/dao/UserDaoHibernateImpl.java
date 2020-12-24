@@ -5,6 +5,7 @@ import jm.task.core.jdbc.util.Util;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class UserDaoHibernateImpl implements UserDao {
@@ -32,7 +33,7 @@ public class UserDaoHibernateImpl implements UserDao {
             session.createSQLQuery("DROP TABLE USER").executeUpdate();
             session.getTransaction().commit();
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Таблица не существует");
         }
     }
 
@@ -61,6 +62,7 @@ public class UserDaoHibernateImpl implements UserDao {
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
+                System.out.println("Пользователя с таким ID, не существует.");
             }
         }
     }
@@ -68,7 +70,7 @@ public class UserDaoHibernateImpl implements UserDao {
     @Override
     public List<User> getAllUsers() {
         try (Session session = new Util().getSessionFactory().openSession()) {
-            return session.createQuery("from User").list();
+            return session.createQuery("FROM User").list();
         }
     }
 
