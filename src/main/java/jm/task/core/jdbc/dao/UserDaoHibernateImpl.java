@@ -7,7 +7,7 @@ import org.hibernate.Transaction;
 
 import java.sql.SQLException;
 import java.util.List;
-
+//Тест пула
 public class UserDaoHibernateImpl implements UserDao {
 
     public UserDaoHibernateImpl() {
